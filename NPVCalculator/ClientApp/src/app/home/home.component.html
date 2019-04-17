@@ -1,14 +1,61 @@
-<h1>Hello, world!</h1>
-<p>Welcome to your new single-page application, built with:</p>
-<ul>
-  <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-  <li><a href='https://angular.io/'>Angular</a> and <a href='http://www.typescriptlang.org/'>TypeScript</a> for client-side code</li>
-  <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-</ul>
-<p>To help you get started, we've also set up:</p>
-<ul>
-  <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-  <li><strong>Angular CLI integration</strong>. In development mode, there's no need to run <code>ng serve</code>. It runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-  <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration automatically invokes <code>ng build</code> to produce minified, ahead-of-time compiled JavaScript files.</li>
-</ul>
-<p>The <code>ClientApp</code> subdirectory is a standard Angular CLI application. If you open a command prompt in that directory, you can run any <code>ng</code> command (e.g., <code>ng test</code>), or use <code>npm</code> to install extra packages into it.</p>
+<form class='well' #npvForm='ngForm' name='form' [appRateValidator] [low]='npvQuery.lowerBoundRate' [high]='npvQuery.upperBoundRate'>
+    <div class='form-group'>
+        <label for='initialInvestment'>Initial Investment</label>
+        <div class='input-group'>
+            <span class='input-group-addon'>
+                <span>₱</span>
+            </span>
+            <input [(ngModel)]='npvQuery.initialInvestment' name='initialInvestment' [appMinValidator]='0' #initialInvestment
+                [ngClass]='{ "border-red": initialInvestment.valid }'
+                type='number' min='0' step='0.01' class='form-control' id='initialInvestment' required>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='form-group col-md-4'>
+            <label for='lowerBound'>Lower Bound Discount Rate</label>
+            <input [(ngModel)]='npvQuery.lowerBoundRate' name='lowerBoundRate' [appMinValidator]='0'
+                type='number' min='0' step='0.01' class='form-control' id='lowerBound' required />
+        </div>
+        <div class='form-group col-md-4'>
+            <label for='upperBound'>Upper Bound Discount Rate</label>
+            <input [(ngModel)]='npvQuery.upperBoundRate' name='upperBoundRate' [appMinValidator]='0'
+                type='number' min='0' step='0.01' class='form-control' id='upperBound' required />
+        </div>
+        <div class='form-group col-md-4'>
+            <label for='rateIncrement'>Discount Rate Increment</label>
+            <input [(ngModel)]='npvQuery.rateIncrement' name='rateIncrement' [appMinValidator]='0' [exclude]='true'
+                [ngClass]='{ "border-red": initialInvestment.valid }'
+                type='number' min='0' step='0.01' class='form-control' id='rateIncrement' required />
+        </div>
+    </div>
+    <h3>Cash Flows</h3>
+    <div class='row'>
+        <ng-container *ngFor='let flow of npvQuery.cashFlows; let i = index;'>
+            <div class='form-group col-md-12'>
+                <label for='cashFlow{{ i + 1 }}'>Year {{ i + 1 }}</label>
+                <div class='input-group'>
+                    <input [(ngModel)]='flow.amount' type='number' class='form-control' name='cashFlows' id='cashFlow{{ i + 1 }}'>
+                    <span class='input-group-btn'>
+                        <button class='btn btn-default' type='button' (click)='removeCashFlow(i)'>
+                            <span class='glyphicon glyphicon-remove-sign'></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <div class='row'>
+        <div class='form-group col-md-12 text-right mb-0'>
+            <button class='btn btn-default' (click)='addCashFlow()'>Add Cash Flow</button>
+            <button class='btn btn-primary ml-3' (click)='computeNPV()' [disabled]='!npvForm.form.valid && npvForm.form.touched'>Calculate NPV</button>
+        </div>
+    </div>
+</form>
+
+<h2 class='text-center' *ngIf='npvQuery.queryResults.length'>Net Present Values</h2>
+<ng-container *ngFor='let result of npvQuery.queryResults'>
+    <div class='well well-sm text-center'>
+        <p>Discount Rate: {{ result.discountRate }} %</p>
+        <p class='mb-0'>Net Present Value: ₱ {{ result.result | number: '1.2-2' }}</p>
+    </div>
+</ng-container>
