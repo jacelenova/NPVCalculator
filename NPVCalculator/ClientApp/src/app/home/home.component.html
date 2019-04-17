@@ -35,7 +35,7 @@
             <div class='form-group col-md-12'>
                 <label for='cashFlow{{ i + 1 }}'>Year {{ i + 1 }}</label>
                 <div class='input-group'>
-                    <input [(ngModel)]='flow.amount' type='number' class='form-control' name='cashFlows' id='cashFlow{{ i + 1 }}'>
+                    <input [(ngModel)]='flow.amount' type='number' class='form-control' name='cashFlow{{ i + 1 }}' id='cashFlow{{ i + 1 }}'>
                     <span class='input-group-btn'>
                         <button class='btn btn-default' type='button' (click)='removeCashFlow(i)'>
                             <span class='glyphicon glyphicon-remove-sign'></span>
