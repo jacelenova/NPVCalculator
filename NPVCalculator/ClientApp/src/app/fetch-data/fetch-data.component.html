@@ -1,8 +1,8 @@
 <h1 class='text-center'>Previous NPV Queries</h1>
 
-<p *ngIf="!forecasts"><em>Loading...</em></p>
+<p *ngIf="!queries"><em>Loading...</em></p>
 
-<table class='table table-striped table-bordered table-hover' *ngIf="forecasts">
+<table class='table table-striped table-bordered table-hover' *ngIf="queries">
     <thead class='thead-dark thead-center'>
         <tr>
             <th>Initial Investment</th>
@@ -12,11 +12,11 @@
         </tr>
     </thead>
     <tbody class='text-center'>
-        <tr *ngFor="let forecast of queries | async">
-            <td>$ {{ forecast.initialInvestment }}</td>
-            <td>{{ forecast.lowerBoundRate }}</td>
-            <td>{{ forecast.upperBoundRate }}</td>
-            <td>{{ forecast.rateIncrement }} %</td>
+        <tr *ngFor="let query of queries | async">
+            <td>$ {{ query.initialInvestment }}</td>
+            <td>{{ query.lowerBoundRate }}</td>
+            <td>{{ query.upperBoundRate }}</td>
+            <td>{{ query.rateIncrement }} %</td>
         </tr>
     </tbody>
 </table>
