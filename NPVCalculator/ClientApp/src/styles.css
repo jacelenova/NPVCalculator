@@ -1,1 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
+.float-right {
+    float: right;
+}
+
+.ml-3 {
+    margin-left: 3px !important;
+}
+
+.mt-3 {
+    margin-top: 3px !important;
+}
+
+.mb-3 {
+    margin-bottom: 3px !important;
+}
+
+.mb-0 {
+    margin-bottom: 0 !important;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.navbar.navbar-inverse {
+    border-radius: 0 !important;
+}
+
+.table .thead-dark th {
+    color: #fff;
+    background-color: #343a40;
+    border-color: #454d55;
+}
+
+.table .thead-center th {
+    text-align: center;
+}
+
+input.ng-invalid.ng-touched {
+    border-color: red;
+}
