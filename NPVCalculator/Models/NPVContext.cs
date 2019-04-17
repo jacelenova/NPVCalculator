@@ -8,8 +8,8 @@ namespace NPVCalculator.Models
 {
     public class NPVContext : DbContext
     {
-        public DbSet<QueryResult> QueryResults { get; set; }
-        public DbSet<NPVQuery> NPVQueries { get; set; }
+        public virtual DbSet<QueryResult> QueryResults { get; set; }
+        public virtual DbSet<NPVQuery> NPVQueries { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

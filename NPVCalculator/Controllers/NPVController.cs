@@ -45,19 +45,8 @@ namespace NPVCalculator.Controllers
             return Ok(result);
         }
 
-        // PUT: api/NPV/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
-
-        private NPVQuery CalculateNPV(NPVQuery query)
+        [NonAction]
+        public NPVQuery CalculateNPV(NPVQuery query)
         {
             var lower = query.LowerBoundRate;
             var upper = query.UpperBoundRate;
@@ -84,7 +73,8 @@ namespace NPVCalculator.Controllers
             return query;
         }
 
-        private decimal Power(decimal value, int power)
+        [NonAction]
+        public decimal Power(decimal value, int power)
         {
             return (decimal)Math.Pow((double)value, power);
         }
